@@ -10,9 +10,9 @@
         android:layout_width="256dp"
         android:scrollbars="horizontal"
         android:layout_height="40dp"
-        android:hint="@string/todoTitle"
+        android:hint="@string/noteTitle"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/todoTitle"
+        android:id="@+id/noteTitle"
         android:layout_gravity="left"
         android:background="@color/todoTitleColor"/>
 
@@ -24,7 +24,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="437dp"
-        android:hint="@string/todoText"
+        android:hint="@string/noteText"
         android:inputType="textMultiLine"
         android:scrollbars="vertical"
         android:gravity="top|left"

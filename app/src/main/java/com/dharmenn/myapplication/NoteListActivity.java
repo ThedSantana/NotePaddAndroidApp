@@ -13,8 +13,6 @@ public class NoteListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_list);
 
-        Intent intent = getIntent();
-//        String message = intent.getStringExtra(EditNoteActivity.EXTRA_MESSAGE);
         TextView textView = new TextView(this);
         textView.setTextSize(40);
 //        textView.setText(message);
