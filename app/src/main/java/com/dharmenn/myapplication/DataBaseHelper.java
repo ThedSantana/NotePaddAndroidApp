@@ -7,10 +7,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "MyNotes";
-    public static final String TABLE_NAME = "Notes";
+    public static final String TABLE_NAME = "NotesList";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_TITLE ="title";
     public static final String COLUMN_TEXT = "text";
@@ -25,11 +29,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE " +TABLE_NAME
+        String sql = "CREATE TABLE IF NOT EXISTS " +TABLE_NAME
                 +"(" +COLUMN_ID+
                 " INTEGER PRIMARY KEY AUTOINCREMENT, " +COLUMN_TITLE+
                 " VARCHAR, " +COLUMN_TEXT+
-                " VARCHAR);";
+                " VARCHAR, DATE VARCHAR);";
         db.execSQL(sql);
     }
 
@@ -40,29 +44,41 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addNote(String title, String text){
+    public boolean addNote(String title, String text, String date){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COLUMN_TITLE,title);
         contentValues.put(COLUMN_TEXT, text);
+        contentValues.put("DATE", date);
 
         db.insert(TABLE_NAME, null, contentValues);
         db.close();
         return true;
     }
 
-    public Cursor getNote(int id){
+    public Cursor getNote(String title){
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT * FROM "+TABLE_NAME+" WHERE id="+id+";";
+        String sql = "SELECT * FROM "+TABLE_NAME+" WHERE title="+title+";";
         Cursor c = db.rawQuery(sql, null);
         return c;
     }
 
-    public Cursor getAllNotes(){
+    public List<String> getAllNotes(){
+        List<String> notes = new ArrayList<String>();
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM "+TABLE_NAME;
-        Cursor c = db.rawQuery(sql, null);
-        return c;
+        Cursor cursor = db.rawQuery(sql, null);
+
+        String name;
+        if (cursor .moveToFirst()) {
+            while (cursor.isAfterLast() == false) {
+                name = cursor.getString(cursor
+                        .getColumnIndex(COLUMN_TITLE));
+                notes.add(name);
+                cursor.moveToNext();
+            }
+        }
+        return notes;
     }
 }
