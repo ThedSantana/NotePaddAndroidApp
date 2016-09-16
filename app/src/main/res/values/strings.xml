@@ -5,4 +5,5 @@
     <string name="noteText">Note Text</string>
     <string name="button_save">Save</string>
     <string name="addNote">Add Note</string>
+    <string name="button_cancel">Cancel</string>
 </resources>

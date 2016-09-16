@@ -35,4 +35,9 @@ public class EditNoteActivity extends Activity {
         startActivity(intent);
     }
 
+    public void cancelEditing(View view){
+        Intent intent = new Intent(this, NoteListActivity.class);
+        startActivity(intent);
+    }
+
 }
